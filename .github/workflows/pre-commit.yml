@@ -1,0 +1,264 @@
+name: Pre-Commit
+
+on:
+  workflow_call:
+
+env:
+  TF_VERSION: 1.2.7
+  PY_VERSION: '3.10'
+  GO_VERSION: "^1.19.0"
+
+jobs:
+  terraform_fmt:
+    name: terraform_fmt
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-go@v3
+        with:
+          go-version: ${{ env.GO_VERSION }}
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Checkout precommit config
+        uses: actions/checkout@v3
+        with:
+          repository: StratusGrid/workflow-config
+          ref: add/precommit_file
+          path: workflow-config
+      - name: Install Python ${{ env.PY_VERSION }}.X
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PY_VERSION }}
+      - name: Install Terraform v${{ env.TF_VERSION }}
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+      - name: Install pre-commit dependencies
+        run: |
+          pip install pre-commit
+      - name: Copy precommit config
+        run: |
+          cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
+      - name: Execute pre-commit
+        run: |
+          pre-commit run terraform_fmt --color=always --show-diff-on-failure --all-files
+  
+
+  terraform_tflint:
+    name: terraform_tflint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-go@v3
+        with:
+          go-version: "^1.19.0"
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Checkout precommit config
+        uses: actions/checkout@v3
+        with:
+          repository: StratusGrid/workflow-config
+          ref: add/precommit_file
+          path: workflow-config
+      - name: Install Python ${{ env.PY_VERSION }}.X
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PY_VERSION }}
+      - name: Install Terraform v${{ env.TF_VERSION }}
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+      - name: Install pre-commit dependencies
+        run: |
+          pip install pre-commit
+          brew install tflint
+          tflint --init
+      - name: Copy precommit config
+        run: |
+          cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
+      - name: Execute pre-commit
+        run: pre-commit run terraform_tflint --color=always --show-diff-on-failure --all-files
+
+  terraform_docs:
+    name: terraform_docs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-go@v3
+        with:
+          go-version: "^1.19.0"
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Checkout precommit config
+        uses: actions/checkout@v3
+        with:
+          repository: StratusGrid/workflow-config
+          ref: add/precommit_file
+          path: workflow-config
+      - name: Install Python ${{ env.PY_VERSION }}.X
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PY_VERSION }}
+      - name: Install Terraform v${{ env.TF_VERSION }}
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+      - name: Install pre-commit dependencies
+        run: |
+          pip install pre-commit
+          brew install terraform-docs
+      - name: Copy precommit config
+        run: |
+          cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
+      - name: Execute pre-commit
+        run: pre-commit run terraform_docs --color=always --show-diff-on-failure --all-files
+
+  check-yaml:
+    name: check-yaml
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-go@v3
+        with:
+          go-version: "^1.19.0"
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Checkout precommit config
+        uses: actions/checkout@v3
+        with:
+          repository: StratusGrid/workflow-config
+          ref: add/precommit_file
+          path: workflow-config
+      - name: Install Python ${{ env.PY_VERSION }}.X
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PY_VERSION }}
+      - name: Install pre-commit dependencies
+        run: |
+          pip install pre-commit
+      - name: Copy precommit config
+        run: |
+          cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
+      - name: Execute pre-commit
+        run: pre-commit run check-yaml --color=always --show-diff-on-failure --all-files
+
+  prettier:
+    name: prettier
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-go@v3
+        with:
+          go-version: "^1.19.0"
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Checkout precommit config
+        uses: actions/checkout@v3
+        with:
+          repository: StratusGrid/workflow-config
+          ref: add/precommit_file
+          path: workflow-config
+      - name: Install Python ${{ env.PY_VERSION }}.X
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PY_VERSION }}
+      - name: Install pre-commit dependencies
+        run: |
+          pip install pre-commit
+      - name: Copy precommit config
+        run: |
+          cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
+      - name: Execute pre-commit
+        run: pre-commit run prettier --color=always --show-diff-on-failure --all-files
+
+  terraform_validate:
+    name: terraform_validate
+    runs-on: ubuntu-latest
+    needs:
+      [terraform_fmt, check-yaml, prettier, terraform_tflint, terraform_docs]
+    steps:
+      - uses: actions/setup-go@v3
+        with:
+          go-version: "^1.19.0"
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Checkout precommit config
+        uses: actions/checkout@v3
+        with:
+          repository: StratusGrid/workflow-config
+          ref: add/precommit_file
+          path: workflow-config
+      - name: Install Python ${{ env.PY_VERSION }}.X
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PY_VERSION }}
+      - name: Install Terraform v${{ env.TF_VERSION }}
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+      - name: Install pre-commit dependencies
+        run: |
+          pip install pre-commit
+      - name: Copy precommit config
+        run: |
+          cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
+      - name: Execute pre-commit
+        run: pre-commit run terraform_validate --color=always --show-diff-on-failure --all-files
+
+  terraform_tfsec:
+    name: terraform_tfsec
+    runs-on: ubuntu-latest
+    needs: terraform_validate
+    steps:
+      - uses: actions/setup-go@v3
+        with:
+          go-version: "^1.19.0"
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Checkout precommit config
+        uses: actions/checkout@v3
+        with:
+          repository: StratusGrid/workflow-config
+          ref: add/precommit_file
+          path: workflow-config
+      - name: Install Python ${{ env.PY_VERSION }}.X
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PY_VERSION }}
+      - name: Install Terraform v${{ env.TF_VERSION }}
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+      - name: Install pre-commit dependencies
+        run: |
+          pip install pre-commit
+          brew install tfsec
+      - name: Copy precommit config
+        run: |
+          cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
+      - name: Execute pre-commit
+        run: pre-commit run terraform_tfsec --color=always --show-diff-on-failure --all-files
+
+  gitleaks:
+    name: gitleaks
+    runs-on: ubuntu-latest
+    needs: terraform_validate
+    steps:
+      - uses: actions/setup-go@v3
+        with:
+          go-version: "^1.19.0"
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Checkout precommit config
+        uses: actions/checkout@v3
+        with:
+          repository: StratusGrid/workflow-config
+          ref: add/precommit_file
+          path: workflow-config
+      - name: Install Python ${{ env.PY_VERSION }}.X
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PY_VERSION }}
+      - name: Install pre-commit dependencies
+        run: |
+          pip install pre-commit
+      - name: Copy precommit config
+        run: |
+          cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
+      - name: Execute pre-commit
+        run: pre-commit run gitleaks --color=always --show-diff-on-failure --all-files
