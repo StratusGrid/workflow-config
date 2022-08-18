@@ -49,7 +49,7 @@ jobs:
     steps:
       - uses: actions/setup-go@v3
         with:
-          go-version: "^1.19.0"
+          go-version: ${{ env.GO_VERSION }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Checkout precommit config
@@ -83,7 +83,7 @@ jobs:
     steps:
       - uses: actions/setup-go@v3
         with:
-          go-version: "^1.19.0"
+          go-version: ${{ env.GO_VERSION }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Checkout precommit config
@@ -116,7 +116,7 @@ jobs:
     steps:
       - uses: actions/setup-go@v3
         with:
-          go-version: "^1.19.0"
+          go-version: ${{ env.GO_VERSION }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Checkout precommit config
@@ -144,7 +144,7 @@ jobs:
     steps:
       - uses: actions/setup-go@v3
         with:
-          go-version: "^1.19.0"
+          go-version: ${{ env.GO_VERSION }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Checkout precommit config
@@ -174,7 +174,7 @@ jobs:
     steps:
       - uses: actions/setup-go@v3
         with:
-          go-version: "^1.19.0"
+          go-version: ${{ env.GO_VERSION }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Checkout precommit config
@@ -207,7 +207,7 @@ jobs:
     steps:
       - uses: actions/setup-go@v3
         with:
-          go-version: "^1.19.0"
+          go-version: ${{ env.GO_VERSION }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Checkout precommit config
@@ -241,7 +241,7 @@ jobs:
     steps:
       - uses: actions/setup-go@v3
         with:
-          go-version: "^1.19.0"
+          go-version: ${{ env.GO_VERSION }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Checkout precommit config
