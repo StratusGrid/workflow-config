@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
         with:
           repository: StratusGrid/workflow-config
-          ref: main
+          ref: v0.1
           path: workflow-config
       - name: Install Python ${{ env.PY_VERSION }}.X
         uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
@@ -56,7 +56,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
         with:
           repository: StratusGrid/workflow-config
-          ref: main
+          ref: v0.1
           path: workflow-config
       - name: Install Python ${{ env.PY_VERSION }}.X
         uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
@@ -90,7 +90,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
         with:
           repository: StratusGrid/workflow-config
-          ref: main
+          ref: v0.1
           path: workflow-config
       - name: Install Python ${{ env.PY_VERSION }}.X
         uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
@@ -123,7 +123,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
         with:
           repository: StratusGrid/workflow-config
-          ref: main
+          ref: v0.1
           path: workflow-config
       - name: Install Python ${{ env.PY_VERSION }}.X
         uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
@@ -151,7 +151,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
         with:
           repository: StratusGrid/workflow-config
-          ref: main
+          ref: v0.1
           path: workflow-config
       - name: Install Python ${{ env.PY_VERSION }}.X
         uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
@@ -181,7 +181,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
         with:
           repository: StratusGrid/workflow-config
-          ref: main
+          ref: v0.1
           path: workflow-config
       - name: Install Python ${{ env.PY_VERSION }}.X
         uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
@@ -214,7 +214,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
         with:
           repository: StratusGrid/workflow-config
-          ref: main
+          ref: v0.1
           path: workflow-config
       - name: Install Python ${{ env.PY_VERSION }}.X
         uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
@@ -248,7 +248,7 @@ jobs:
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
         with:
           repository: StratusGrid/workflow-config
-          ref: main
+          ref: v0.1
           path: workflow-config
       - name: Install Python ${{ env.PY_VERSION }}.X
         uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
