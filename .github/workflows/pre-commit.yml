@@ -185,7 +185,7 @@ jobs:
           path: workflow-config
       - name: Terraform Automation get install token
         id: get-token
-        uses: getsentry/action-github-app-token@v1
+        uses: getsentry/action-github-app-token@38a3ce582e170ddfe8789f509597c6944f2292a9
         with:
           app_id: ${{ secrets.TF_AUTOMATION_APP_ID }}
           private_key: ${{ secrets.TF_AUTOMATION_APP_PRIVATE_KEY }}
