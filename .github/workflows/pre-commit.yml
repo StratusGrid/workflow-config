@@ -4,8 +4,7 @@ on:
   workflow_call:
 
 env:
-  TF_VERSION: 1.2.7
-  PY_VERSION: '3.10'
+  PY_VERSION: "3.10"
   GO_VERSION: "^1.19.0"
 
 jobs:
@@ -28,10 +27,11 @@ jobs:
         uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
         with:
           python-version: ${{ env.PY_VERSION }}
-      - name: Install Terraform v${{ env.TF_VERSION }}
-        uses: hashicorp/setup-terraform@17d4c9b8043b238f6f35641cdd8433da1e6f3867 # tag=v2
-        with:
-          terraform_version: ${{ env.TF_VERSION }}
+      - name: Install TFenv
+        run: |
+          curl -fsSL -o install.sh https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+          brew install tfenv
+          tfenv install
       - name: Install pre-commit dependencies
         run: |
           pip install pre-commit
@@ -62,10 +62,11 @@ jobs:
         uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
         with:
           python-version: ${{ env.PY_VERSION }}
-      - name: Install Terraform v${{ env.TF_VERSION }}
-        uses: hashicorp/setup-terraform@17d4c9b8043b238f6f35641cdd8433da1e6f3867 # tag=v2
-        with:
-          terraform_version: ${{ env.TF_VERSION }}
+      - name: Install TFenv
+        run: |
+          curl -fsSL -o install.sh https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+          brew install tfenv
+          tfenv install
       - name: Install pre-commit dependencies
         run: |
           pip install pre-commit
@@ -96,10 +97,11 @@ jobs:
         uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
         with:
           python-version: ${{ env.PY_VERSION }}
-      - name: Install Terraform v${{ env.TF_VERSION }}
-        uses: hashicorp/setup-terraform@17d4c9b8043b238f6f35641cdd8433da1e6f3867 # tag=v2
-        with:
-          terraform_version: ${{ env.TF_VERSION }}
+      - name: Install TFenv
+        run: |
+          curl -fsSL -o install.sh https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+          brew install tfenv
+          tfenv install
       - name: Install pre-commit dependencies
         run: |
           pip install pre-commit
@@ -187,10 +189,11 @@ jobs:
         uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
         with:
           python-version: ${{ env.PY_VERSION }}
-      - name: Install Terraform v${{ env.TF_VERSION }}
-        uses: hashicorp/setup-terraform@17d4c9b8043b238f6f35641cdd8433da1e6f3867 # tag=v2
-        with:
-          terraform_version: ${{ env.TF_VERSION }}
+      - name: Install TFenv
+        run: |
+          curl -fsSL -o install.sh https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+          brew install tfenv
+          tfenv install
       - name: Install pre-commit dependencies
         run: |
           pip install pre-commit
@@ -220,10 +223,11 @@ jobs:
         uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
         with:
           python-version: ${{ env.PY_VERSION }}
-      - name: Install Terraform v${{ env.TF_VERSION }}
-        uses: hashicorp/setup-terraform@17d4c9b8043b238f6f35641cdd8433da1e6f3867 # tag=v2
-        with:
-          terraform_version: ${{ env.TF_VERSION }}
+      - name: Install TFenv
+        run: |
+          curl -fsSL -o install.sh https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+          brew install tfenv
+          tfenv install
       - name: Install pre-commit dependencies
         run: |
           pip install pre-commit
