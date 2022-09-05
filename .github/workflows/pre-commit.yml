@@ -4,8 +4,7 @@ on:
   workflow_call:
 
 env:
-  TF_VERSION: 1.2.7
-  PY_VERSION: '3.10'
+  PY_VERSION: "3.10"
   GO_VERSION: "^1.19.0"
 
 jobs:
@@ -13,7 +12,7 @@ jobs:
     name: terraform_fmt
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-go@84cbf8094393cdc5fe1fe1671ff2647332956b1a # tag=v3
+      - uses: actions/setup-go@268d8c0ca0432bb2cf416faae41297df9d262d7f # tag=v3
         with:
           go-version: ${{ env.GO_VERSION }}
       - name: Checkout
@@ -28,10 +27,11 @@ jobs:
         uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
         with:
           python-version: ${{ env.PY_VERSION }}
-      - name: Install Terraform v${{ env.TF_VERSION }}
-        uses: hashicorp/setup-terraform@17d4c9b8043b238f6f35641cdd8433da1e6f3867 # tag=v2
-        with:
-          terraform_version: ${{ env.TF_VERSION }}
+      - name: Install TFenv
+        run: |
+          curl -fsSL -o install.sh https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+          brew install tfenv
+          tfenv install
       - name: Install pre-commit dependencies
         run: |
           pip install pre-commit
@@ -47,7 +47,7 @@ jobs:
     name: terraform_tflint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-go@84cbf8094393cdc5fe1fe1671ff2647332956b1a # tag=v3
+      - uses: actions/setup-go@268d8c0ca0432bb2cf416faae41297df9d262d7f # tag=v3
         with:
           go-version: ${{ env.GO_VERSION }}
       - name: Checkout
@@ -62,10 +62,11 @@ jobs:
         uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
         with:
           python-version: ${{ env.PY_VERSION }}
-      - name: Install Terraform v${{ env.TF_VERSION }}
-        uses: hashicorp/setup-terraform@17d4c9b8043b238f6f35641cdd8433da1e6f3867 # tag=v2
-        with:
-          terraform_version: ${{ env.TF_VERSION }}
+      - name: Install TFenv
+        run: |
+          curl -fsSL -o install.sh https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+          brew install tfenv
+          tfenv install
       - name: Install pre-commit dependencies
         run: |
           pip install pre-commit
@@ -81,7 +82,7 @@ jobs:
     name: terraform_docs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-go@84cbf8094393cdc5fe1fe1671ff2647332956b1a # tag=v3
+      - uses: actions/setup-go@268d8c0ca0432bb2cf416faae41297df9d262d7f # tag=v3
         with:
           go-version: ${{ env.GO_VERSION }}
       - name: Checkout
@@ -96,10 +97,11 @@ jobs:
         uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
         with:
           python-version: ${{ env.PY_VERSION }}
-      - name: Install Terraform v${{ env.TF_VERSION }}
-        uses: hashicorp/setup-terraform@17d4c9b8043b238f6f35641cdd8433da1e6f3867 # tag=v2
-        with:
-          terraform_version: ${{ env.TF_VERSION }}
+      - name: Install TFenv
+        run: |
+          curl -fsSL -o install.sh https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+          brew install tfenv
+          tfenv install
       - name: Install pre-commit dependencies
         run: |
           pip install pre-commit
@@ -114,7 +116,7 @@ jobs:
     name: check-yaml
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-go@84cbf8094393cdc5fe1fe1671ff2647332956b1a # tag=v3
+      - uses: actions/setup-go@268d8c0ca0432bb2cf416faae41297df9d262d7f # tag=v3
         with:
           go-version: ${{ env.GO_VERSION }}
       - name: Checkout
@@ -142,7 +144,7 @@ jobs:
     name: prettier
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-go@84cbf8094393cdc5fe1fe1671ff2647332956b1a # tag=v3
+      - uses: actions/setup-go@268d8c0ca0432bb2cf416faae41297df9d262d7f # tag=v3
         with:
           go-version: ${{ env.GO_VERSION }}
       - name: Checkout
@@ -172,7 +174,7 @@ jobs:
     needs:
       [terraform_fmt, check-yaml, prettier, terraform_tflint, terraform_docs]
     steps:
-      - uses: actions/setup-go@84cbf8094393cdc5fe1fe1671ff2647332956b1a # tag=v3
+      - uses: actions/setup-go@268d8c0ca0432bb2cf416faae41297df9d262d7f # tag=v3
         with:
           go-version: ${{ env.GO_VERSION }}
       - name: Checkout
@@ -183,14 +185,26 @@ jobs:
           repository: StratusGrid/workflow-config
           ref: v0.1
           path: workflow-config
+      - name: Terraform Automation get install token
+        id: get-token
+        # Action is pined to SHA to use thrid party action as recommended by GitHub:
+        # https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-third-party-actions
+        uses: getsentry/action-github-app-token@38a3ce582e170ddfe8789f509597c6944f2292a9 # v1.0.6
+        with:
+          app_id: ${{ secrets.TF_AUTOMATION_APP_ID }}
+          private_key: ${{ secrets.TF_AUTOMATION_APP_PRIVATE_KEY }}
+      - name: Config git
+        run: |
+          git config --global url."https://x-access-token:${{ steps.get-token.outputs.token }}@github.com".insteadOf "https://github.com"
       - name: Install Python ${{ env.PY_VERSION }}.X
         uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
         with:
           python-version: ${{ env.PY_VERSION }}
-      - name: Install Terraform v${{ env.TF_VERSION }}
-        uses: hashicorp/setup-terraform@17d4c9b8043b238f6f35641cdd8433da1e6f3867 # tag=v2
-        with:
-          terraform_version: ${{ env.TF_VERSION }}
+      - name: Install TFenv
+        run: |
+          curl -fsSL -o install.sh https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+          brew install tfenv
+          tfenv install
       - name: Install pre-commit dependencies
         run: |
           pip install pre-commit
@@ -205,7 +219,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: terraform_validate
     steps:
-      - uses: actions/setup-go@84cbf8094393cdc5fe1fe1671ff2647332956b1a # tag=v3
+      - uses: actions/setup-go@268d8c0ca0432bb2cf416faae41297df9d262d7f # tag=v3
         with:
           go-version: ${{ env.GO_VERSION }}
       - name: Checkout
@@ -220,10 +234,11 @@ jobs:
         uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
         with:
           python-version: ${{ env.PY_VERSION }}
-      - name: Install Terraform v${{ env.TF_VERSION }}
-        uses: hashicorp/setup-terraform@17d4c9b8043b238f6f35641cdd8433da1e6f3867 # tag=v2
-        with:
-          terraform_version: ${{ env.TF_VERSION }}
+      - name: Install TFenv
+        run: |
+          curl -fsSL -o install.sh https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+          brew install tfenv
+          tfenv install
       - name: Install pre-commit dependencies
         run: |
           pip install pre-commit
@@ -239,7 +254,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: terraform_validate
     steps:
-      - uses: actions/setup-go@84cbf8094393cdc5fe1fe1671ff2647332956b1a # tag=v3
+      - uses: actions/setup-go@268d8c0ca0432bb2cf416faae41297df9d262d7f # tag=v3
         with:
           go-version: ${{ env.GO_VERSION }}
       - name: Checkout
