@@ -186,7 +186,14 @@ jobs:
           repository: StratusGrid/workflow-config
           ref: ${{ env.WORKFLOW_VERSION }}
           path: workflow-config
+      - name: Check if GitHub App is provided
+        id: check-github-app
+        if: "${{ env.TF_AUTOMATION_APP_ID != '' }}"
+        run: echo "::set-output name=defined::true"
+        env:
+            TF_AUTOMATION_APP_ID: ${{ secrets.TF_AUTOMATION_APP_ID }}
       - name: Terraform Automation get install token
+        if: steps.check-github-app.outputs.defined == 'true'
         id: get-token
         # Action is pined to SHA to use thrid party action as recommended by GitHub:
         # https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-third-party-actions
@@ -195,6 +202,7 @@ jobs:
           app_id: ${{ secrets.TF_AUTOMATION_APP_ID }}
           private_key: ${{ secrets.TF_AUTOMATION_APP_PRIVATE_KEY }}
       - name: Config git
+        if: steps.check-github-app.outputs.defined == 'true'
         run: |
           git config --global url."https://x-access-token:${{ steps.get-token.outputs.token }}@github.com".insteadOf "https://github.com"
       - name: Install Python ${{ env.PY_VERSION }}.X
