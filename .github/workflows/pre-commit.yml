@@ -73,15 +73,10 @@ jobs:
           sudo apt-get install build-essential
           brew install tfenv
           tfenv install
-          echo $PATH
       - name: Install pre-commit dependencies
         run: |
-          echo $PATH
-          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/runner/.bash_profile
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-          echo $PATH
           pip install pre-commit
-          brew install tflint
+          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
       - name: Copy precommit config
         run: |
           cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
@@ -118,7 +113,10 @@ jobs:
       - name: Install pre-commit dependencies
         run: |
           pip install pre-commit
-          brew install terraform-docs
+          curl -sSLo ./terraform-docs.tar.gz https://terraform-docs.io/dl/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
+          tar -xzf terraform-docs.tar.gz
+          chmod +x terraform-docs
+          mv terraform-docs $HOME/terraform-docs
       - name: Copy precommit config
         run: |
           cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
@@ -269,7 +267,7 @@ jobs:
       - name: Install pre-commit dependencies
         run: |
           pip install pre-commit
-          brew install tfsec
+          curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
       - name: Copy precommit config
         run: |
           cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
