@@ -113,15 +113,15 @@ jobs:
       - name: Install pre-commit dependencies
         run: |
           pip install pre-commit
-          curl -sSLo ./terraform-docs.tar.gz https://terraform-docs.io/dl/v0.16.0/terraform-docs-v0.16.0-$(uname)-amd64.tar.gz
-          tar -xzf terraform-docs.tar.gz
-          chmod +x terraform-docs
-          mv terraform-docs $HOME/terraform-docs
       - name: Copy precommit config
         run: |
           cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
-      - name: Execute pre-commit
-        run: pre-commit run terraform_docs --color=always --show-diff-on-failure --all-files
+      - name: Render terraform docs and push changes back to PR
+        uses: terraform-docs/gh-actions@main
+        with:
+          working-dir: .
+          config-file: .config/.terraform-docs.yml
+          git-push: "false"
 
   check-yaml:
     name: check-yaml
