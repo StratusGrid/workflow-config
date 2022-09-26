@@ -33,6 +33,7 @@ jobs:
           git clone --depth=1 https://github.com/tfutils/tfenv.git ~/.tfenv
           echo 'export PATH="$HOME/.tfenv/bin:$PATH"' >> ~/.bash_profile
           eval "$(~/.tfenv/bin shellenv)"
+          tfenv install
       - name: Install pre-commit dependencies
         run: |
           pip install pre-commit
