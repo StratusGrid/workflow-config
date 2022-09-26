@@ -45,7 +45,6 @@ jobs:
       - name: Execute pre-commit
         run: |
           pre-commit run terraform_fmt --color=always --show-diff-on-failure --all-files
-  
 
   terraform_tflint:
     name: terraform_tflint
@@ -83,7 +82,6 @@ jobs:
           echo $PATH
           pip install pre-commit
           brew install tflint
-          tflint --init
       - name: Copy precommit config
         run: |
           cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
@@ -205,7 +203,7 @@ jobs:
         if: "${{ env.TF_AUTOMATION_APP_ID != '' }}"
         run: echo "::set-output name=defined::true"
         env:
-            TF_AUTOMATION_APP_ID: ${{ secrets.TF_AUTOMATION_APP_ID }}
+          TF_AUTOMATION_APP_ID: ${{ secrets.TF_AUTOMATION_APP_ID }}
       - name: Terraform Automation get install token
         if: steps.check-github-app.outputs.defined == 'true'
         id: get-token
