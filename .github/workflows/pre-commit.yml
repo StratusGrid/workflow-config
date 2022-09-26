@@ -74,8 +74,13 @@ jobs:
           sudo apt-get install build-essential
           brew install tfenv
           tfenv install
+          echo $PATH
       - name: Install pre-commit dependencies
         run: |
+          echo $PATH
+          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/runner/.bash_profile
+          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+          echo $PATH
           pip install pre-commit
           brew install tflint
           tflint --init
