@@ -87,24 +87,9 @@ jobs:
     name: terraform_docs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-go@268d8c0ca0432bb2cf416faae41297df9d262d7f # tag=v3
-        with:
-          go-version: ${{ env.GO_VERSION }}
       - name: Checkout
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-      - name: Checkout precommit config
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
-        with:
-          repository: StratusGrid/workflow-config
-          ref: ${{ env.WORKFLOW_VERSION }}
-          path: workflow-config
-      - name: Install Python ${{ env.PY_VERSION }}.X
-        uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
-        with:
-          python-version: ${{ env.PY_VERSION }}
-      - name: Render terraform docs and push changes back to PR
+      - name: Check terraform docs
         uses: terraform-docs/gh-actions@main
         with:
           working-dir: .
