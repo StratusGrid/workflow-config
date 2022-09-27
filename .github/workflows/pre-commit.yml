@@ -6,7 +6,7 @@ on:
 env:
   PY_VERSION: "3.10"
   GO_VERSION: "^1.19.0"
-  WORKFLOW_VERSION: "v0.1"
+  WORKFLOW_VERSION: "v0.5"
 
 jobs:
   terraform_fmt:
@@ -28,14 +28,6 @@ jobs:
         uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
         with:
           python-version: ${{ env.PY_VERSION }}
-      - name: Install TFenv
-        run: |
-          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-          echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> /home/runner/.bash_profile
-          eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-          sudo apt-get install build-essential
-          brew install tfenv
-          tfenv install
       - name: Install pre-commit dependencies
         run: |
           pip install pre-commit
