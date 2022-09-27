@@ -30,8 +30,8 @@ jobs:
           python-version: ${{ env.PY_VERSION }}
       - name: Install TFenv
         run: |
-          curl -fsSL -o install.sh https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
-          brew install tfenv
+          git clone --depth=1 https://github.com/tfutils/tfenv.git ~/.tfenv
+          ln -sfn ~/.tfenv/bin/* /usr/local/bin
           tfenv install
       - name: Install pre-commit dependencies
         run: |
@@ -42,7 +42,6 @@ jobs:
       - name: Execute pre-commit
         run: |
           pre-commit run terraform_fmt --color=always --show-diff-on-failure --all-files
-  
 
   terraform_tflint:
     name: terraform_tflint
@@ -63,16 +62,10 @@ jobs:
         uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
         with:
           python-version: ${{ env.PY_VERSION }}
-      - name: Install TFenv
-        run: |
-          curl -fsSL -o install.sh https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
-          brew install tfenv
-          tfenv install
       - name: Install pre-commit dependencies
         run: |
           pip install pre-commit
-          brew install tflint
-          tflint --init
+          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
       - name: Copy precommit config
         run: |
           cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
@@ -83,35 +76,15 @@ jobs:
     name: terraform_docs
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-go@268d8c0ca0432bb2cf416faae41297df9d262d7f # tag=v3
-        with:
-          go-version: ${{ env.GO_VERSION }}
       - name: Checkout
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
-      - name: Checkout precommit config
-        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3
+      - name: Check terraform docs
+        uses: terraform-docs/gh-actions@main
         with:
-          repository: StratusGrid/workflow-config
-          ref: ${{ env.WORKFLOW_VERSION }}
-          path: workflow-config
-      - name: Install Python ${{ env.PY_VERSION }}.X
-        uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
-        with:
-          python-version: ${{ env.PY_VERSION }}
-      - name: Install TFenv
-        run: |
-          curl -fsSL -o install.sh https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
-          brew install tfenv
-          tfenv install
-      - name: Install pre-commit dependencies
-        run: |
-          pip install pre-commit
-          brew install terraform-docs
-      - name: Copy precommit config
-        run: |
-          cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
-      - name: Execute pre-commit
-        run: pre-commit run terraform_docs --color=always --show-diff-on-failure --all-files
+          working-dir: .
+          config-file: .config/.terraform-docs.yml
+          git-push: "false"
+          fail-on-diff: "true"
 
   check-yaml:
     name: check-yaml
@@ -191,7 +164,7 @@ jobs:
         if: "${{ env.TF_AUTOMATION_APP_ID != '' }}"
         run: echo "::set-output name=defined::true"
         env:
-            TF_AUTOMATION_APP_ID: ${{ secrets.TF_AUTOMATION_APP_ID }}
+          TF_AUTOMATION_APP_ID: ${{ secrets.TF_AUTOMATION_APP_ID }}
       - name: Terraform Automation get install token
         if: steps.check-github-app.outputs.defined == 'true'
         id: get-token
@@ -211,8 +184,8 @@ jobs:
           python-version: ${{ env.PY_VERSION }}
       - name: Install TFenv
         run: |
-          curl -fsSL -o install.sh https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
-          brew install tfenv
+          git clone --depth=1 https://github.com/tfutils/tfenv.git ~/.tfenv
+          ln -sfn ~/.tfenv/bin/* /usr/local/bin
           tfenv install
       - name: Install pre-commit dependencies
         run: |
@@ -243,15 +216,10 @@ jobs:
         uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
         with:
           python-version: ${{ env.PY_VERSION }}
-      - name: Install TFenv
-        run: |
-          curl -fsSL -o install.sh https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
-          brew install tfenv
-          tfenv install
       - name: Install pre-commit dependencies
         run: |
           pip install pre-commit
-          brew install tfsec
+          curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
       - name: Copy precommit config
         run: |
           cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
