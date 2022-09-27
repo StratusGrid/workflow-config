@@ -23,6 +23,7 @@ jobs:
         with:
           repository: StratusGrid/workflow-config
           ref: ${{ env.WORKFLOW_VERSION }}
+          ref: ${{ github.event.pull_request.head.ref }}
           path: workflow-config
       - name: Install Python ${{ env.PY_VERSION }}.X
         uses: actions/setup-python@b55428b1882923874294fa556849718a1d7f2ca5 # tag=v4
