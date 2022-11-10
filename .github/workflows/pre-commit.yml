@@ -33,6 +33,7 @@ jobs:
           git clone --depth=1 https://github.com/tfutils/tfenv.git ~/.tfenv
           ln -sfn ~/.tfenv/bin/* /usr/local/bin
           tfenv install
+          set | grep TFENV
       - name: Install pre-commit dependencies
         run: |
           pip install pre-commit
@@ -41,7 +42,9 @@ jobs:
           cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
       - name: Execute pre-commit
         run: |
-          pre-commit run terraform_fmt --color=always --show-diff-on-failure --all-files
+          set | grep TFENV
+          tfenv use latest
+          pre-commit run terraform_fmt --color=always --show-diff-on-failure --all-files --verbose
 
   terraform_tflint:
     name: terraform_tflint
