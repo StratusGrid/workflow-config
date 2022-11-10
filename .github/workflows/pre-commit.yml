@@ -34,6 +34,7 @@ jobs:
           ln -sfn ~/.tfenv/bin/* /usr/local/bin
           tfenv install
           set
+          ls -lah $(which terraform)
       - name: Install pre-commit dependencies
         run: |
           pip install pre-commit
@@ -43,7 +44,10 @@ jobs:
       - name: Execute pre-commit
         run: |
           set
+          ls -lah $(which terraform)
           tfenv use latest
+          set
+          ls -lah $(which terraform)
           pre-commit run terraform_fmt --color=always --show-diff-on-failure --all-files --verbose
 
   terraform_tflint:
