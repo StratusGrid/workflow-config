@@ -6,7 +6,6 @@ on:
 env:
   PY_VERSION: "3.10"
   GO_VERSION: "^1.19.0"
-  WORKFLOW_VERSION: "v0.1"
 
 jobs:
   terraform_fmt:
