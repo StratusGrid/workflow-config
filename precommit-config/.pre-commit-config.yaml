@@ -1,6 +1,6 @@
 repos:
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.74.1 # v.1.63.0 and above require bash 5 from brew
+    rev: v1.76.0
     hooks:
       - id: terraform_fmt
       - id: terraform_validate
@@ -22,7 +22,7 @@ repos:
           - "--args=--only=terraform_typed_variables"
           - "--args=--only=terraform_module_pinned_source"
           - "--args=--only=terraform_naming_convention"
-          #- '--args=--only=terraform_required_version' # This is bugged with the new Terraform provider syntax
+          - '--args=--only=terraform_required_version'
           - "--args=--only=terraform_required_providers"
           - "--args=--only=terraform_workspace_remote"
       - id: terraform_tfsec
@@ -36,7 +36,7 @@ repos:
       - id: check-yaml
   #GitLeaks
   - repo: https://github.com/zricethezav/gitleaks
-    rev: v8.11.0
+    rev: v8.15.0
     hooks:
       - id: gitleaks
   #Prettier
