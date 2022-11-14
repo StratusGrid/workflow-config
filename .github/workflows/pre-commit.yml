@@ -33,6 +33,7 @@ jobs:
           git clone --depth=1 https://github.com/tfutils/tfenv.git ~/.tfenv
           ln -sfn ~/.tfenv/bin/* /usr/local/bin
           tfenv install
+          tfenv use
       - name: Install pre-commit dependencies
         run: |
           pip install pre-commit
@@ -187,6 +188,7 @@ jobs:
           git clone --depth=1 https://github.com/tfutils/tfenv.git ~/.tfenv
           ln -sfn ~/.tfenv/bin/* /usr/local/bin
           tfenv install
+          tfenv use
       - name: Install pre-commit dependencies
         run: |
           pip install pre-commit
