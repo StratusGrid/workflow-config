@@ -37,7 +37,7 @@ jobs:
           pip install pre-commit
       - name: Copy precommit config
         run: |
-          cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
+          cp -r -n workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
       - name: Execute pre-commit
         run: |
           pre-commit run terraform_fmt --color=always --show-diff-on-failure --all-files
@@ -66,7 +66,7 @@ jobs:
           curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
       - name: Copy precommit config
         run: |
-          cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
+          cp -r -n workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
       - name: Execute pre-commit
         run: pre-commit run terraform_tflint --color=always --show-diff-on-failure --all-files
 
@@ -107,7 +107,7 @@ jobs:
           pip install pre-commit
       - name: Copy precommit config
         run: |
-          cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
+          cp -r -n workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
       - name: Execute pre-commit
         run: pre-commit run check-yaml --color=always --show-diff-on-failure --all-files
 
@@ -134,7 +134,7 @@ jobs:
           pip install pre-commit
       - name: Copy precommit config
         run: |
-          cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
+          cp -r -n workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
       - name: Execute pre-commit
         run: pre-commit run prettier --color=always --show-diff-on-failure --all-files
 
@@ -188,7 +188,7 @@ jobs:
           pip install pre-commit
       - name: Copy precommit config
         run: |
-          cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
+          cp -r -n workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
       - name: Execute pre-commit
         run: pre-commit run terraform_validate --color=always --show-diff-on-failure --all-files
 
@@ -217,7 +217,7 @@ jobs:
           curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
       - name: Copy precommit config
         run: |
-          cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
+          cp -r -n workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
       - name: Execute pre-commit
         run: pre-commit run terraform_tfsec --color=always --show-diff-on-failure --all-files
 
@@ -245,6 +245,6 @@ jobs:
           pip install pre-commit
       - name: Copy precommit config
         run: |
-          cp -r workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
+          cp -r -n workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
       - name: Execute pre-commit
         run: pre-commit run gitleaks --color=always --show-diff-on-failure --all-files
