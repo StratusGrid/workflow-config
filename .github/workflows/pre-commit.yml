@@ -23,7 +23,7 @@ jobs:
           repository: StratusGrid/workflow-config
           path: workflow-config
       - name: Install Python ${{ env.PY_VERSION }}.X
-        uses: actions/setup-python@13ae5bb136fac2878aff31522b9efb785519f984 # tag=v4
+        uses: actions/setup-python@2c3dd9e7e29afd70cc0950079bde6c979d1f69f9 # v4
         with:
           python-version: ${{ env.PY_VERSION }}
       - name: Install TFenv
@@ -57,7 +57,7 @@ jobs:
           repository: StratusGrid/workflow-config
           path: workflow-config
       - name: Install Python ${{ env.PY_VERSION }}.X
-        uses: actions/setup-python@13ae5bb136fac2878aff31522b9efb785519f984 # tag=v4
+        uses: actions/setup-python@2c3dd9e7e29afd70cc0950079bde6c979d1f69f9 # v4
         with:
           python-version: ${{ env.PY_VERSION }}
       - name: Install pre-commit dependencies
@@ -99,7 +99,7 @@ jobs:
           repository: StratusGrid/workflow-config
           path: workflow-config
       - name: Install Python ${{ env.PY_VERSION }}.X
-        uses: actions/setup-python@13ae5bb136fac2878aff31522b9efb785519f984 # tag=v4
+        uses: actions/setup-python@2c3dd9e7e29afd70cc0950079bde6c979d1f69f9 # v4
         with:
           python-version: ${{ env.PY_VERSION }}
       - name: Install pre-commit dependencies
@@ -126,7 +126,7 @@ jobs:
           repository: StratusGrid/workflow-config
           path: workflow-config
       - name: Install Python ${{ env.PY_VERSION }}.X
-        uses: actions/setup-python@13ae5bb136fac2878aff31522b9efb785519f984 # tag=v4
+        uses: actions/setup-python@2c3dd9e7e29afd70cc0950079bde6c979d1f69f9 # v4
         with:
           python-version: ${{ env.PY_VERSION }}
       - name: Install pre-commit dependencies
@@ -174,7 +174,7 @@ jobs:
         run: |
           git config --global url."https://x-access-token:${{ steps.get-token.outputs.token }}@github.com".insteadOf "https://github.com"
       - name: Install Python ${{ env.PY_VERSION }}.X
-        uses: actions/setup-python@13ae5bb136fac2878aff31522b9efb785519f984 # tag=v4
+        uses: actions/setup-python@2c3dd9e7e29afd70cc0950079bde6c979d1f69f9 # v4
         with:
           python-version: ${{ env.PY_VERSION }}
       - name: Install TFenv
@@ -208,7 +208,7 @@ jobs:
           repository: StratusGrid/workflow-config
           path: workflow-config
       - name: Install Python ${{ env.PY_VERSION }}.X
-        uses: actions/setup-python@13ae5bb136fac2878aff31522b9efb785519f984 # tag=v4
+        uses: actions/setup-python@2c3dd9e7e29afd70cc0950079bde6c979d1f69f9 # v4
         with:
           python-version: ${{ env.PY_VERSION }}
       - name: Install pre-commit dependencies
@@ -237,7 +237,7 @@ jobs:
           repository: StratusGrid/workflow-config
           path: workflow-config
       - name: Install Python ${{ env.PY_VERSION }}.X
-        uses: actions/setup-python@13ae5bb136fac2878aff31522b9efb785519f984 # tag=v4
+        uses: actions/setup-python@2c3dd9e7e29afd70cc0950079bde6c979d1f69f9 # v4
         with:
           python-version: ${{ env.PY_VERSION }}
       - name: Install pre-commit dependencies
