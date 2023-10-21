@@ -12,7 +12,7 @@ jobs:
     name: terraform_fmt
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-go@4d34df0c2316fe8122ab82dc22947d607c0c91f9 # v4
+      - uses: actions/setup-go@93397bea11091df50f3d7e59dc26a7711a8bcfbe # v4
         with:
           go-version: ${{ env.GO_VERSION }}
       - name: Checkout
@@ -46,7 +46,7 @@ jobs:
     name: terraform_tflint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-go@4d34df0c2316fe8122ab82dc22947d607c0c91f9 # v4
+      - uses: actions/setup-go@93397bea11091df50f3d7e59dc26a7711a8bcfbe # v4
         with:
           go-version: ${{ env.GO_VERSION }}
       - name: Checkout
@@ -88,7 +88,7 @@ jobs:
     name: check-yaml
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-go@4d34df0c2316fe8122ab82dc22947d607c0c91f9 # v4
+      - uses: actions/setup-go@93397bea11091df50f3d7e59dc26a7711a8bcfbe # v4
         with:
           go-version: ${{ env.GO_VERSION }}
       - name: Checkout
@@ -115,7 +115,7 @@ jobs:
     name: prettier
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/setup-go@4d34df0c2316fe8122ab82dc22947d607c0c91f9 # v4
+      - uses: actions/setup-go@93397bea11091df50f3d7e59dc26a7711a8bcfbe # v4
         with:
           go-version: ${{ env.GO_VERSION }}
       - name: Checkout
@@ -144,7 +144,7 @@ jobs:
     needs:
       [terraform_fmt, check-yaml, prettier, terraform_tflint, terraform_docs]
     steps:
-      - uses: actions/setup-go@4d34df0c2316fe8122ab82dc22947d607c0c91f9 # v4
+      - uses: actions/setup-go@93397bea11091df50f3d7e59dc26a7711a8bcfbe # v4
         with:
           go-version: ${{ env.GO_VERSION }}
       - name: Checkout
@@ -197,7 +197,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: terraform_validate
     steps:
-      - uses: actions/setup-go@4d34df0c2316fe8122ab82dc22947d607c0c91f9 # v4
+      - uses: actions/setup-go@93397bea11091df50f3d7e59dc26a7711a8bcfbe # v4
         with:
           go-version: ${{ env.GO_VERSION }}
       - name: Checkout
@@ -226,7 +226,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: terraform_validate
     steps:
-      - uses: actions/setup-go@4d34df0c2316fe8122ab82dc22947d607c0c91f9 # v4
+      - uses: actions/setup-go@93397bea11091df50f3d7e59dc26a7711a8bcfbe # v4
         with:
           go-version: ${{ env.GO_VERSION }}
       - name: Checkout
