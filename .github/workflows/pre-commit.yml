@@ -165,7 +165,7 @@ jobs:
         id: get-token
         # Action is pined to SHA to use thrid party action as recommended by GitHub:
         # https://docs.github.com/en/actions/security-guides/security-hardening-for-github-actions#using-third-party-actions
-        uses: getsentry/action-github-app-token@97c9e23528286821f97fba885c1b1123284b29cc # v2.0.0
+        uses: getsentry/action-github-app-token@d4b5da6c5e37703f8c3b3e43abb5705b46e159cc # v3.0.0
         with:
           app_id: ${{ secrets.TF_AUTOMATION_APP_ID }}
           private_key: ${{ secrets.TF_AUTOMATION_APP_PRIVATE_KEY }}
