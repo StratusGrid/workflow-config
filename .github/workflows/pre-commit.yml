@@ -157,7 +157,7 @@ jobs:
       - name: Check if GitHub App is provided
         id: check-github-app
         if: "${{ env.TF_AUTOMATION_APP_ID != '' }}"
-        run: echo "::set-output name=defined::true"
+        run: echo "{name}={value}" >> $GITHUB_OUTPUT
         env:
           TF_AUTOMATION_APP_ID: ${{ secrets.TF_AUTOMATION_APP_ID }}
       - name: Terraform Automation get install token
