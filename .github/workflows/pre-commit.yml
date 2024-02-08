@@ -77,9 +77,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@36c9547386018d8a99388b7c0e369c65e3b21cb1 # v0.11.0
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
       - name: Check terraform docs
-        uses: terraform-docs/gh-actions@main
+        uses: terraform-docs/gh-actions@@v1.0.0
         with:
           working-dir: .
           config-file: .config/.terraform-docs.yml
