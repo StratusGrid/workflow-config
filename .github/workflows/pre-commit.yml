@@ -4,8 +4,8 @@ on:
   workflow_call:
 
 env:
-  PY_VERSION: "3.10"
-  GO_VERSION: "^1.19.0"
+  PY_VERSION: "3.x"
+  GO_VERSION: "^1.22.0"
 
 jobs:
   terraform_fmt:
