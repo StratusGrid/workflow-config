@@ -85,7 +85,10 @@ jobs:
           config-file: .config/.terraform-docs.yml
           output-file: README.md
           git-push: "true"
-          fail-on-diff: "false"
+          fail-on-diff: "true"
+      - name: Copy precommit config
+        run: |
+          git status
 
   check-yaml:
     name: check-yaml
