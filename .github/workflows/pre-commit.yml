@@ -85,7 +85,7 @@ jobs:
           config-file: .config/.terraform-docs.yml
           output-file: README.md
           git-push: "true"
-          fail-on-diff: "true"
+          fail-on-diff: "false"
 
   check-yaml:
     name: check-yaml
