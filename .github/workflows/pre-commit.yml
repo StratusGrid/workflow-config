@@ -85,7 +85,7 @@ jobs:
           config-file: .config/.terraform-docs.yml
           output-file: README.md
           output-method: inject
-          git-push: "true"
+          git-push: "false"
           fail-on-diff: "true"
 
   check-yaml:
