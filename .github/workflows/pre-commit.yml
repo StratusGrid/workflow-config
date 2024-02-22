@@ -197,35 +197,27 @@ jobs:
       - name: Execute pre-commit
         run: pre-commit run terraform_validate --color=always --show-diff-on-failure --all-files
 
-  terraform_tfsec:
-    name: terraform_tfsec
-    runs-on: ubuntu-latest
+  terraform_trivy:
+    name: terraform_trivy
+    runs-on: ubuntu-20.04
     needs: terraform_validate
     steps:
-      - uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Run Trivy vulnerability scanner in IaC mode
+        uses: aquasecurity/trivy-action@master
         with:
-          go-version: ${{ env.GO_VERSION }}
-          cache: false
-      - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-      - name: Checkout precommit config
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
-        with:
-          repository: StratusGrid/workflow-config
-          path: workflow-config
-      - name: Install Python ${{ env.PY_VERSION }}.X
-        uses: actions/setup-python@0a5c61591373683505ea898e09a3ea4f39ef2b9c # v5
-        with:
-          python-version: ${{ env.PY_VERSION }}
-      - name: Install pre-commit dependencies
-        run: |
-          pip install pre-commit
-          curl -s https://raw.githubusercontent.com/aquasecurity/tfsec/master/scripts/install_linux.sh | bash
-      - name: Copy precommit config
-        run: |
-          cp -r -n workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
-      - name: Execute pre-commit
-        run: pre-commit run terraform_tfsec --color=always --show-diff-on-failure --all-files
+          scan-type: 'config'
+          hide-progress: false
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          exit-code: '1'
+          ignore-unfixed: true
+          severity: 'CRITICAL,HIGH'
+      # - name: Upload Trivy scan results to GitHub Security tab
+      #   uses: github/codeql-action/upload-sarif@v2
+      #     with:
+      #       sarif_file: 'trivy-results.sarif'
 
   gitleaks:
     name: gitleaks
