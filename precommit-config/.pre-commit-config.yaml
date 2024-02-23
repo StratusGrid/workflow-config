@@ -31,11 +31,9 @@ repos:
     hooks:
       - id: trivyfs-docker
         args:
-          - fs
-          - --scanners vuln,secret,misconfig
-          - --severity CRITICAL,HIGH
-          - ./
-          - . # last arg indicates the path/file to scan
+          - --scanners=vuln,secret,misconfig
+          - --severity=CRITICAL,HIGH
+          - ./ # last arg indicates the path/file to scan
   # Native Git PreCommit Hooks
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
