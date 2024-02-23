@@ -29,14 +29,9 @@ repos:
   - repo: https://github.com/mxab/pre-commit-trivy.git
     rev: v0.11.0
     hooks:
-      - id: trivyfs-docker
+      - id: trivy
         args:
-          - --scanners vuln,secret,misconfig
-          - --severity CRITICAL,HIGH
-          - ./
-          - . # last arg indicates the path/file to scan
-      - id: trivyconfig-docker
-        args:
+          - fs
           - --scanners vuln,secret,misconfig
           - --severity CRITICAL,HIGH
           - ./
