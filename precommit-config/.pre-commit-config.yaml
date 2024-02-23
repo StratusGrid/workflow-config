@@ -25,22 +25,16 @@ repos:
           - "--args=--only=terraform_required_version"
           - "--args=--only=terraform_required_providers"
           - "--args=--only=terraform_workspace_remote"
-  # #Trivy
-  # - repo: https://github.com/mxab/pre-commit-trivy.git
-  #   rev: v0.11.0
-  #   hooks:
-  #     - id: trivyfs-docker
-  #       args:
-  #         - --scanners vuln,secret,misconfig
-  #         - --severity CRITICAL,HIGH
-  #         - ./
-  #         - . # last arg indicates the path/file to scan
-  #     - id: trivyconfig-docker
-  #       args:
-  #         - --scanners vuln,secret,misconfig
-  #         - --severity CRITICAL,HIGH
-  #         - ./
-  #         - . # last arg indicates the path/file to scan
+  #Trivy
+  - repo: https://github.com/mxab/pre-commit-trivy.git
+    rev: v0.11.0
+    hooks:
+      - id: trivyfs-docker
+        args:
+          - --scanners vuln,secret,misconfig
+          - --severity CRITICAL,HIGH
+          - ./
+          - . # last arg indicates the path/file to scan
   # Native Git PreCommit Hooks
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
