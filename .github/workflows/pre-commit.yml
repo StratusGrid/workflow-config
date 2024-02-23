@@ -207,16 +207,11 @@ jobs:
       - name: Run Trivy vulnerability scanner in IaC mode
         uses: aquasecurity/trivy-action@master
         with:
-          scan-type: 'fs'
+          scan-type: "fs"
           hide-progress: false
-          format: 'json'
-          exit-code: '1'
-          ignore-unfixed: true
-          severity: 'CRITICAL,HIGH'
-      # - name: Upload Trivy scan results to GitHub Security tab
-      #   uses: github/codeql-action/upload-sarif@v2
-      #     with:
-      #       sarif_file: 'trivy-results.sarif'
+          exit-code: "1"
+          scanners: 'vuln,secret,misconfig'
+          severity: "CRITICAL,HIGH"
 
   gitleaks:
     name: gitleaks
