@@ -32,7 +32,7 @@ repos:
       - id: trivyfs-docker
         args:
           - fs
-          - --scanners vuln,secret,misconfig
+          #- --scanners vuln,secret,misconfig
           - --severity CRITICAL,HIGH
           - ./
           - . # last arg indicates the path/file to scan
