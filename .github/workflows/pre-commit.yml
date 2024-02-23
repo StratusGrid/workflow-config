@@ -210,7 +210,7 @@ jobs:
           scan-type: "fs"
           hide-progress: false
           exit-code: "1"
-          scanners: 'vuln,secret,misconfig'
+          scanners: "vuln,secret,misconfig"
           severity: "CRITICAL,HIGH"
 
   gitleaks:
