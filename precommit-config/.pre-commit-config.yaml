@@ -31,7 +31,12 @@ repos:
     hooks:
       - id: trivyfs-docker
         args:
-          - fs
+          - --scanners vuln,secret,misconfig
+          - --severity CRITICAL,HIGH
+          - ./
+          - . # last arg indicates the path/file to scan
+      - id: trivyconfig-docker
+        args:
           - --scanners vuln,secret,misconfig
           - --severity CRITICAL,HIGH
           - ./
