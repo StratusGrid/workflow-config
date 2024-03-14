@@ -212,6 +212,7 @@ jobs:
           exit-code: "1"
           scanners: "vuln,secret,misconfig"
           severity: "CRITICAL,HIGH"
+          skip-dirs: ".terraform/*"
 
   gitleaks:
     name: gitleaks
