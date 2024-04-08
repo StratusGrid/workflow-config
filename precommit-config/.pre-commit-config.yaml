@@ -33,6 +33,7 @@ repos:
         args:
           - --scanners=vuln,secret,misconfig
           - --severity=CRITICAL,HIGH
+          - --skip-dirs="**/.terraform"
           - ./ # last arg indicates the path/file to scan
   # Native Git PreCommit Hooks
   - repo: https://github.com/pre-commit/pre-commit-hooks
