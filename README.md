@@ -1,4 +1,4 @@
-<p align="center">                                                                                                                                            ─╯
+<p align="center">
   <img src="https://github.com/StratusGrid/terraform-readme-template/blob/main/header/stratusgrid-logo-smaller.jpg?raw=true" />
 
   <p align="center">                                                           
@@ -8,6 +8,7 @@
     <a href="https://stratusgrid.com/blog">Blog</a>
   </p>                    
 </p>
+ß
 # workflow-config
 Repository that stores the StratusGrid github workflows.
 
