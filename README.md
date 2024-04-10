@@ -8,7 +8,7 @@
     <a href="https://stratusgrid.com/blog">Blog</a>
   </p>                    
 </p>
-ß
+
 # workflow-config
 Repository that stores the StratusGrid github workflows.
 
