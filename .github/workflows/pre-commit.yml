@@ -199,7 +199,7 @@ jobs:
 
   terraform_trivy:
     name: terraform_trivy
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     needs: terraform_validate
     steps:
       - name: Checkout code
