@@ -46,7 +46,7 @@ repos:
     hooks:
       - id: gitleaks
   #Prettier
-  - repo: https://github.com/pre-commit/pre-commit
-    rev: v4.0.1
+  - repo: https://github.com/prettier/prettier
+    rev: v3.4.2
     hooks:
       - id: prettier
