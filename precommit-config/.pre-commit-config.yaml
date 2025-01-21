@@ -47,6 +47,6 @@ repos:
       - id: gitleaks
   #Prettier
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: 'v4.0.0-alpha.8'  # Use the sha / tag you want to point at
+    rev: "v4.0.0-alpha.8" # Use the sha / tag you want to point at
     hooks:
       - id: prettier
