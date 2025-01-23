@@ -5,13 +5,12 @@ on:
 
 env:
   PY_VERSION: "3.x"
-  GO_VERSION: "^1.22.0"
-  UBUNTU_VERSION: "24.04"
+  GO_VERSION: "^1.23.0"
 
 jobs:
   terraform_fmt:
     name: terraform_fmt
-    runs-on: ubuntu-${{ env.UBUNTU_VERSION }}
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/setup-go@f111f3307d8850f501ac008e886eec1fd1932a34 # v5
         with:
@@ -46,7 +45,7 @@ jobs:
 
   terraform_tflint:
     name: terraform_tflint
-    runs-on: ubuntu-${{ env.UBUNTU_VERSION }}
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/setup-go@f111f3307d8850f501ac008e886eec1fd1932a34 # v5
         with:
@@ -75,7 +74,7 @@ jobs:
 
   terraform_docs:
     name: terraform_docs
-    runs-on: ubuntu-${{ env.UBUNTU_VERSION }}
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -89,7 +88,7 @@ jobs:
 
   check-yaml:
     name: check-yaml
-    runs-on: ubuntu-${{ env.UBUNTU_VERSION }}
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/setup-go@f111f3307d8850f501ac008e886eec1fd1932a34 # v5
         with:
@@ -117,7 +116,7 @@ jobs:
 
   prettier:
     name: prettier
-    runs-on: ubuntu-${{ env.UBUNTU_VERSION }}
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/setup-go@f111f3307d8850f501ac008e886eec1fd1932a34 # v5
         with:
@@ -145,7 +144,7 @@ jobs:
 
   terraform_validate:
     name: terraform_validate
-    runs-on: ubuntu-${{ env.UBUNTU_VERSION }}
+    runs-on: ubuntu-24.04
     needs:
       [terraform_fmt, check-yaml, prettier, terraform_tflint, terraform_docs]
     steps:
@@ -200,7 +199,7 @@ jobs:
 
   terraform_trivy:
     name: terraform_trivy
-    runs-on: ubuntu-{{ env.UBUNTU_VERSION }}
+    runs-on: ubuntu-24.04
     needs: terraform_validate
     steps:
       - name: Checkout code
@@ -217,7 +216,7 @@ jobs:
 
   gitleaks:
     name: gitleaks
-    runs-on: ubuntu-${{ env.UBUNTU_VERSION }}
+    runs-on: ubuntu-24.04
     needs: terraform_validate
     steps:
       - uses: actions/setup-go@f111f3307d8850f501ac008e886eec1fd1932a34 # v5
