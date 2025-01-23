@@ -5,7 +5,7 @@ on:
 
 env:
   PY_VERSION: "3.x"
-  GO_VERSION: "^1.22.0"
+  GO_VERSION: "^1.23.0"
 
 jobs:
   terraform_fmt:
