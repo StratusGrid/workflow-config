@@ -138,3 +138,4 @@ Or let them run automatically on git commit.
 - `.tflint.hcl`: Terraform linter configuration
 - `.prettierignore`: Prettier ignore rules
 - `renovate.json`: Automated dependency update configuration
+- 
