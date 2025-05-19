@@ -22,7 +22,28 @@ This repository contains standardized GitHub workflows and pre-commit configurat
 - **Code Formatting**: Consistent code style enforcement
 - **Automated Updates**: Renovate configuration for dependency management
 
-## Pre-commit Configuration
+## GitHub Actions Usage
+
+### Adding Workflows to Your Repository
+
+1. Create a `.github/workflows` directory in your repository if it doesn't exist
+2. Add the desired workflow file (e.g., `pre-commit.yml`)
+3. Reference the workflow from this repository
+
+Example for pre-commit workflow:
+
+```yaml
+name: Pre-Commit
+
+on:
+  pull_request:
+
+jobs:
+  build:
+    uses: StratusGrid/workflow-config/.github/workflows/pre-commit.yml@main
+```
+
+## Local Setup
 
 ### Setup
 
@@ -42,6 +63,13 @@ For easier usage, you can add this function to your shell configuration (e.g., `
 
 ```bash
 pre-commit-run() {
+    # Check if pre-commit is installed
+    if ! command -v pre-commit &> /dev/null; then
+        echo "Error: pre-commit is not installed. Please install it first:"
+        echo "pip install pre-commit"
+        return 1
+    fi
+
     local branch=${1:-main}
     local base_url="https://raw.githubusercontent.com/StratusGrid/workflow-config/$branch/precommit-config"
     local files=(".pre-commit-config.yaml" ".prettierignore" ".tflint.hcl")
@@ -87,14 +115,6 @@ pre-commit-run develop
 pre-commit-run-main
 ```
 
-This improved version:
-1. Uses a function instead of an alias for better error handling
-2. Creates a temporary directory for the files
-3. Provides better feedback during execution
-4. Allows specifying different branches
-5. Includes proper error handling and cleanup
-6. Offers an optional alias for the default branch
-
 ### Available Hooks
 
 The pre-commit configuration includes:
@@ -111,33 +131,6 @@ pre-commit run --all-files
 ```
 
 Or let them run automatically on git commit.
-
-## Available Workflows
-
-### Pre-commit Workflow
-
-The pre-commit workflow runs various checks on pull requests to ensure code quality and consistency.
-
-## Usage
-
-### Adding Workflows to Your Repository
-
-1. Create a `.github/workflows` directory in your repository if it doesn't exist
-2. Add the desired workflow file (e.g., `pre-commit.yml`)
-3. Reference the workflow from this repository
-
-Example for pre-commit workflow:
-
-```yaml
-name: Pre-Commit
-
-on:
-  pull_request:
-
-jobs:
-  build:
-    uses: StratusGrid/workflow-config/.github/workflows/pre-commit.yml@main
-```
 
 ## Configuration Files
 
