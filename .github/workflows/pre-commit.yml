@@ -12,7 +12,7 @@ jobs:
     name: terraform_fmt
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/setup-go@f111f3307d8850f501ac008e886eec1fd1932a34 # v5
+      - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5
         with:
           go-version: ${{ env.GO_VERSION }}
           cache: false
@@ -47,7 +47,7 @@ jobs:
     name: terraform_tflint
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/setup-go@f111f3307d8850f501ac008e886eec1fd1932a34 # v5
+      - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5
         with:
           go-version: ${{ env.GO_VERSION }}
           cache: false
@@ -90,7 +90,7 @@ jobs:
     name: check-yaml
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/setup-go@f111f3307d8850f501ac008e886eec1fd1932a34 # v5
+      - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5
         with:
           go-version: ${{ env.GO_VERSION }}
           cache: false
@@ -118,7 +118,7 @@ jobs:
     name: prettier
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/setup-go@f111f3307d8850f501ac008e886eec1fd1932a34 # v5
+      - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5
         with:
           go-version: ${{ env.GO_VERSION }}
           cache: false
@@ -148,7 +148,7 @@ jobs:
     needs:
       [terraform_fmt, check-yaml, prettier, terraform_tflint, terraform_docs]
     steps:
-      - uses: actions/setup-go@f111f3307d8850f501ac008e886eec1fd1932a34 # v5
+      - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5
         with:
           go-version: ${{ env.GO_VERSION }}
           cache: false
@@ -219,7 +219,7 @@ jobs:
     runs-on: ubuntu-24.04
     needs: terraform_validate
     steps:
-      - uses: actions/setup-go@f111f3307d8850f501ac008e886eec1fd1932a34 # v5
+      - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5
         with:
           go-version: ${{ env.GO_VERSION }}
           cache: false
