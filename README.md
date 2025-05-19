@@ -1,3 +1,5 @@
+# StratusGrid Workflow Configuration
+
 <p align="center">                                                                                                                                            
                                                                                 
   <img src="https://github.com/StratusGrid/terraform-readme-template/blob/main/header/stratusgrid-logo-smaller.jpg?raw=true" />
@@ -9,14 +11,124 @@
   </p>                    
 </p>
 
-# workflow-config
-Repository that stores the StratusGrid github workflows.
+## Overview
+
+This repository contains standardized GitHub workflows and pre-commit configurations used across StratusGrid repositories. It provides a centralized location for maintaining consistent code quality checks, linting rules, and automated workflows.
+
+## Features
+
+- **Pre-commit Workflows**: Automated checks for code quality and consistency
+- **Terraform Linting**: Standardized Terraform code validation
+- **Code Formatting**: Consistent code style enforcement
+- **Automated Updates**: Renovate configuration for dependency management
+
+## Pre-commit Configuration
+
+### Setup
+
+1. Copy the following files from the `precommit-config` directory to your repository root:
+   - `.pre-commit-config.yaml`
+   - `.prettierignore`
+   - `.tflint.hcl`
+2. Install pre-commit hooks:
+   ```bash
+   pip install pre-commit
+   pre-commit install
+   ```
+
+### Quick Setup with Alias
+
+For easier usage, you can add this function to your shell configuration (e.g., `~/.bashrc` or `~/.zshrc`):
+
+```bash
+pre-commit-run() {
+    local branch=${1:-main}
+    local base_url="https://raw.githubusercontent.com/StratusGrid/workflow-config/$branch/precommit-config"
+    local files=(".pre-commit-config.yaml" ".prettierignore" ".tflint.hcl")
+    local temp_dir=$(mktemp -d)
+    
+    echo "Downloading configuration files from branch: $branch"
+    
+    # Download files
+    for file in "${files[@]}"; do
+        if ! curl -s -o "$temp_dir/$file" "$base_url/$file"; then
+            echo "Error: Failed to download $file"
+            rm -rf "$temp_dir"
+            return 1
+        fi
+    done
+    
+    # Run pre-commit
+    echo "Running pre-commit checks..."
+    if pre-commit run -a --config "$temp_dir/.pre-commit-config.yaml"; then
+        echo "Pre-commit checks completed successfully"
+    else
+        echo "Pre-commit checks failed"
+    fi
+    
+    # Cleanup
+    rm -rf "$temp_dir" ".pre-commit-trivy-cache"
+}
+
+# Optional: Create an alias for the default branch
+alias pre-commit-run-main="pre-commit-run main"
+```
+
+Then you can run pre-commit checks in several ways:
+
+```bash
+# Use default branch (main)
+pre-commit-run
+
+# Specify a branch
+pre-commit-run develop
+
+# Use the alias for main branch
+pre-commit-run-main
+```
+
+This improved version:
+1. Uses a function instead of an alias for better error handling
+2. Creates a temporary directory for the files
+3. Provides better feedback during execution
+4. Allows specifying different branches
+5. Includes proper error handling and cleanup
+6. Offers an optional alias for the default branch
+
+### Available Hooks
+
+The pre-commit configuration includes:
+- Terraform formatting and validation
+- Code formatting with Prettier
+- Linting for various file types
+- Security checks
+
+### Usage
+
+Run pre-commit checks manually:
+```bash
+pre-commit run --all-files
+```
+
+Or let them run automatically on git commit.
+
+## Available Workflows
+
+### Pre-commit Workflow
+
+The pre-commit workflow runs various checks on pull requests to ensure code quality and consistency.
 
 ## Usage
 
-Add this file in your .github/workflows folder
+### Adding Workflows to Your Repository
 
-```yml
+1. Create a `.github/workflows` directory in your repository if it doesn't exist
+2. Add the desired workflow file (e.g., `pre-commit.yml`)
+3. Reference the workflow from this repository
+
+Example for pre-commit workflow:
+
+```yaml
 name: Pre-Commit
 
 on:
@@ -27,4 +139,9 @@ jobs:
     uses: StratusGrid/workflow-config/.github/workflows/pre-commit.yml@main
 ```
 
-change the path to the workflow you want to use.
+## Configuration Files
+
+- `.pre-commit-config.yaml`: Defines pre-commit hooks and their configurations
+- `.tflint.hcl`: Terraform linter configuration
+- `.prettierignore`: Prettier ignore rules
+- `renovate.json`: Automated dependency update configuration
