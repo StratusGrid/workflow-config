@@ -49,7 +49,6 @@ jobs:
 
 1. Copy the following files from the `precommit-config` directory to your repository root:
    - `.pre-commit-config.yaml`
-   - `.prettierignore`
    - `.tflint.hcl`
 2. Install pre-commit hooks:
    ```bash
@@ -72,7 +71,7 @@ pre-commit-run() {
 
     local branch=${1:-main}
     local base_url="https://raw.githubusercontent.com/StratusGrid/workflow-config/$branch/precommit-config"
-    local files=(".pre-commit-config.yaml" ".prettierignore" ".tflint.hcl")
+    local files=(".pre-commit-config.yaml" ".tflint.hcl")
     local temp_dir=$(mktemp -d)
     
     echo "Downloading configuration files from branch: $branch"
@@ -119,7 +118,6 @@ pre-commit-run-main
 
 The pre-commit configuration includes:
 - Terraform formatting and validation
-- Code formatting with Prettier
 - Linting for various file types
 - Security checks
 
@@ -136,5 +134,4 @@ Or let them run automatically on git commit.
 
 - `.pre-commit-config.yaml`: Defines pre-commit hooks and their configurations
 - `.tflint.hcl`: Terraform linter configuration
-- `.prettierignore`: Prettier ignore rules
 - `renovate.json`: Automated dependency update configuration

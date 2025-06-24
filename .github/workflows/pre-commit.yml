@@ -12,7 +12,7 @@ jobs:
     name: terraform_fmt
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/setup-go@f111f3307d8850f501ac008e886eec1fd1932a34 # v5
+      - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5
         with:
           go-version: ${{ env.GO_VERSION }}
           cache: false
@@ -24,7 +24,7 @@ jobs:
           repository: StratusGrid/workflow-config
           path: workflow-config
       - name: Install Python ${{ env.PY_VERSION }}.X
-        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: ${{ env.PY_VERSION }}
       - name: Install TFenv
@@ -47,7 +47,7 @@ jobs:
     name: terraform_tflint
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/setup-go@f111f3307d8850f501ac008e886eec1fd1932a34 # v5
+      - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5
         with:
           go-version: ${{ env.GO_VERSION }}
           cache: false
@@ -59,7 +59,7 @@ jobs:
           repository: StratusGrid/workflow-config
           path: workflow-config
       - name: Install Python ${{ env.PY_VERSION }}.X
-        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: ${{ env.PY_VERSION }}
       - name: Install pre-commit dependencies
@@ -90,7 +90,7 @@ jobs:
     name: check-yaml
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/setup-go@f111f3307d8850f501ac008e886eec1fd1932a34 # v5
+      - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5
         with:
           go-version: ${{ env.GO_VERSION }}
           cache: false
@@ -102,7 +102,7 @@ jobs:
           repository: StratusGrid/workflow-config
           path: workflow-config
       - name: Install Python ${{ env.PY_VERSION }}.X
-        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: ${{ env.PY_VERSION }}
       - name: Install pre-commit dependencies
@@ -114,41 +114,13 @@ jobs:
       - name: Execute pre-commit
         run: pre-commit run check-yaml --color=always --show-diff-on-failure --all-files
 
-  prettier:
-    name: prettier
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/setup-go@f111f3307d8850f501ac008e886eec1fd1932a34 # v5
-        with:
-          go-version: ${{ env.GO_VERSION }}
-          cache: false
-      - name: Checkout
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-      - name: Checkout precommit config
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
-        with:
-          repository: StratusGrid/workflow-config
-          path: workflow-config
-      - name: Install Python ${{ env.PY_VERSION }}.X
-        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5
-        with:
-          python-version: ${{ env.PY_VERSION }}
-      - name: Install pre-commit dependencies
-        run: |
-          pip install pre-commit
-      - name: Copy precommit config
-        run: |
-          cp -r -n workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
-      - name: Execute pre-commit
-        run: pre-commit run prettier --color=always --show-diff-on-failure --all-files
-
   terraform_validate:
     name: terraform_validate
     runs-on: ubuntu-24.04
     needs:
-      [terraform_fmt, check-yaml, prettier, terraform_tflint, terraform_docs]
+      [terraform_fmt, check-yaml, terraform_tflint, terraform_docs]
     steps:
-      - uses: actions/setup-go@f111f3307d8850f501ac008e886eec1fd1932a34 # v5
+      - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5
         with:
           go-version: ${{ env.GO_VERSION }}
           cache: false
@@ -179,7 +151,7 @@ jobs:
         run: |
           git config --global url."https://x-access-token:${{ steps.get-token.outputs.token }}@github.com".insteadOf "https://github.com"
       - name: Install Python ${{ env.PY_VERSION }}.X
-        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: ${{ env.PY_VERSION }}
       - name: Install TFenv
@@ -219,7 +191,7 @@ jobs:
     runs-on: ubuntu-24.04
     needs: terraform_validate
     steps:
-      - uses: actions/setup-go@f111f3307d8850f501ac008e886eec1fd1932a34 # v5
+      - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5
         with:
           go-version: ${{ env.GO_VERSION }}
           cache: false
@@ -231,7 +203,7 @@ jobs:
           repository: StratusGrid/workflow-config
           path: workflow-config
       - name: Install Python ${{ env.PY_VERSION }}.X
-        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: ${{ env.PY_VERSION }}
       - name: Install pre-commit dependencies

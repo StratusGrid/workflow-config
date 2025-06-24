@@ -1,7 +1,0 @@
-/sops
-README.md
-.terraform
-/.config
-/workflow-config
-/lambda
-/node_modules
