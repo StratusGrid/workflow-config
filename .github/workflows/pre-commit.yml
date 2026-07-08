@@ -2,6 +2,12 @@ name: Pre-Commit
 
 on:
   workflow_call:
+    inputs:
+      trivy_scan_ref:
+        description: "Path Trivy scans in the terraform_trivy job. Narrow to e.g. 'terraform' to skip app dependency/Dockerfile scanning."
+        type: string
+        required: false
+        default: "."
 
 env:
   PY_VERSION: "3.x"
@@ -189,6 +195,7 @@ jobs:
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: "fs"
+          scan-ref: ${{ inputs.trivy_scan_ref }}
           hide-progress: false
           exit-code: "1"
           scanners: "vuln,secret,misconfig"
