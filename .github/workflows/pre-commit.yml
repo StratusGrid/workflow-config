@@ -11,7 +11,10 @@ on:
 
 env:
   PY_VERSION: "3.x"
-  GO_VERSION: "^1.23.0"
+  # Pinned to 1.23.x, not "^1.23.0": on newer Go the runner resolves to 1.26.x,
+  # where gitleaks' vendored go-re2 wazero runtime panics with
+  # "wasm error: invalid table access" while compiling its config regexes.
+  GO_VERSION: "~1.23.0"
 
 jobs:
   terraform_fmt:
