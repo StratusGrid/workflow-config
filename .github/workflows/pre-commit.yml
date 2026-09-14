@@ -86,6 +86,12 @@ jobs:
         run: |
           cp -r -n workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
       - name: Execute pre-commit
+        # tflint --init calls the GitHub API to install plugins. Without a token, the
+        # limit is 60 requests per hour per IP, shared with other tenants on hosted
+        # runners ("403 API rate limit exceeded"). Any token works; no scopes needed.
+        # https://github.com/terraform-linters/tflint/blob/v0.64.0/docs/user-guide/plugins.md#avoiding-rate-limiting
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: pre-commit run terraform_tflint --color=always --show-diff-on-failure --all-files
 
   terraform_docs:
