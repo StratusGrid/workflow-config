@@ -63,9 +63,16 @@ jobs:
         with:
           python-version: ${{ env.PY_VERSION }}
       - name: Install pre-commit dependencies
-        run: |
-          pip install pre-commit
-          curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+        run: pip install pre-commit
+      # Upstream deleted install_linux.sh on 2026-09-12 (terraform-linters/tflint#2607).
+      # Install a pinned tflint release and verify the zip against its published checksum.
+      # To bump: change tflint_version and copy the tflint_linux_amd64.zip line from
+      # that release's checksums.txt.
+      - name: Install tflint
+        uses: terraform-linters/setup-tflint@1cf010d3c7aef302051ccdb68c14c5dc2efa34ef # v6.3.1
+        with:
+          tflint_version: v0.64.0
+          checksums: cca9d13e2e1d7a2c627af60ff899a3c9b74212899416aeb96ec764d2ef954537
       - name: Copy precommit config
         run: |
           cp -r -n workflow-config/precommit-config/. -t $GITHUB_WORKSPACE
