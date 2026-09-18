@@ -10,7 +10,7 @@ env:
 jobs:
   terraform_fmt:
     name: terraform_fmt
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5
         with:
@@ -45,7 +45,7 @@ jobs:
 
   terraform_tflint:
     name: terraform_tflint
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5
         with:
@@ -87,7 +87,7 @@ jobs:
 
   terraform_docs:
     name: terraform_docs
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
@@ -101,7 +101,7 @@ jobs:
 
   check-yaml:
     name: check-yaml
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5
         with:
@@ -129,7 +129,7 @@ jobs:
 
   terraform_validate:
     name: terraform_validate
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs:
       [terraform_fmt, check-yaml, terraform_tflint, terraform_docs]
     steps:
@@ -184,7 +184,7 @@ jobs:
 
   terraform_trivy:
     name: terraform_trivy
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs: terraform_validate
     steps:
       - name: Checkout code
@@ -201,7 +201,7 @@ jobs:
 
   gitleaks:
     name: gitleaks
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     needs: terraform_validate
     steps:
       - uses: actions/setup-go@d35c59abb061a4a6fb18e82ac0862c26744d6ab5 # v5
