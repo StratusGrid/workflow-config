@@ -92,7 +92,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - name: Check terraform docs
-        uses: terraform-docs/gh-actions@main
+        uses: terraform-docs/gh-actions@6de6da0cefcc6b4b7a5cbea4d79d97060733093c # main
         with:
           working-dir: .
           config-file: .config/.terraform-docs.yml
@@ -190,7 +190,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
       - name: Run Trivy vulnerability scanner in IaC mode
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@c03d123cb480c08c69b054af418ea5e69fe6e57e # master
         with:
           scan-type: "fs"
           hide-progress: false
